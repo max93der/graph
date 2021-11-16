@@ -1,9 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "graphes.h"
 
 void initialiserGraphe(GRAPHE *g)
 {
-	g->nbS=0;        
+	g->nbS=0;
 	g->nbA=0;
 	g->maxS=0;
 	g->premierSommet=NULL;
@@ -18,7 +19,7 @@ int ajouterSommet(GRAPHE *g, int info)
 	if (pointeur == NULL)
 		{
 			printf("Erreur! Memoire insuffisante pour creer un sommet\n");
-			return -1; 
+			return -1;
 		}
 		else
 		{
@@ -82,12 +83,12 @@ int ajouterArc(GRAPHE *g, int a, int b, int info)
 							if (padj == NULL)
 								{
 									printf("Erreur! Memoire insuffisante pour creer un sommet\n");
-									return -3; 
+									return -3;
 								}
 							else
 								{
 									psommet->adj=padj; /* premier element de la liste d'adjacence */
-									padj->suivant=NULL; 
+									padj->suivant=NULL;
 								}
 						}
 					else /* la liste d'adjacence est non vide, on la parcourt pour voir si b s'y trouve */
@@ -98,7 +99,7 @@ int ajouterArc(GRAPHE *g, int a, int b, int info)
 									if (padj == NULL)
 										{
 											printf("Erreur! Memoire insuffisante pour creer un sommet\n");
-											return -3; 
+											return -3;
 										}
 									else
 										{
@@ -121,18 +122,18 @@ int ajouterArc(GRAPHE *g, int a, int b, int info)
 											if (padj == NULL)
 												{
 													printf("Erreur! Memoire insuffisante pour creer un sommet\n");
-													return -3; 
+													return -3;
 												}
 											else
 												if (precedent->suivant==NULL) /* element ajouter a la fin */
 													{
 														precedent->suivant=padj;
-														padj->suivant=NULL; 
+														padj->suivant=NULL;
 													}
 												else /* element ajouter "au milieu" pour garder ordre */
 													{
 														padj->suivant=precedent->suivant;
-														precedent->suivant=padj; 
+														precedent->suivant=padj;
 													}
 										}
 								}
@@ -144,7 +145,7 @@ int ajouterArc(GRAPHE *g, int a, int b, int info)
 			return 0;
 		}
 }
-	
+
 
 int supprimerSommet(GRAPHE *g, int a)
 {
@@ -178,7 +179,7 @@ int supprimerSommet(GRAPHE *g, int a)
 			else
 				{
 					if (psommet->suivant == NULL) g->dernierSommet=precedent;
-					
+
 					if (flag_premier_sommet == 1) g->premierSommet=psommet->suivant;
 					else precedent->suivant=psommet->suivant;
 					padj=psommet->adj;
@@ -192,13 +193,13 @@ int supprimerSommet(GRAPHE *g, int a)
 							padj=suivant;
 						}
 				}
-			
+
 			/* il faut aussi supprimer les arcs ayant le sommet a supprimer comme extremite */
 			psommet=g->premierSommet;
 			while (psommet != NULL)
 				{
 					padj=psommet->adj;
-					flag_premier_arc=1; 
+					flag_premier_arc=1;
 					while (padj !=NULL)
 						{
 							if (padj->dest == a) break;
@@ -206,7 +207,7 @@ int supprimerSommet(GRAPHE *g, int a)
 								{
 									flag_premier_arc=0;
 									precedent_adj=padj;
-									padj=padj->suivant; 
+									padj=padj->suivant;
 								}
 						}
 					if (padj != NULL)
@@ -248,7 +249,7 @@ int supprimerArc(GRAPHE *g, int a, int b)
 			else
 				{
 					padj=psommet->adj;
-					flag_premier_arc=1; 
+					flag_premier_arc=1;
 					while (padj !=NULL)
 						{
 							if (padj->dest == b) break;
@@ -256,7 +257,7 @@ int supprimerArc(GRAPHE *g, int a, int b)
 								{
 									flag_premier_arc=0;
 									precedent_adj=padj;
-									padj=padj->suivant; 
+									padj=padj->suivant;
 								}
 						}
 					if (padj != NULL)
@@ -324,14 +325,14 @@ void afficherGraphe(GRAPHE *g)
 					printf("\n");
 					psommet=psommet->suivant;
 				}
-			while (psommet != NULL); 
+			while (psommet != NULL);
 		}
 }
 
 int lireFichier(char *nomf, GRAPHE *g)
 {
   FILE *fp;
-  char ligne[MAX+1]; 
+  char ligne[MAX+1];
   int temp,i,j,nbS1,nbLigne,sommet,nbElt,creerArc;
 
 	initialiserGraphe(g);
@@ -340,27 +341,27 @@ int lireFichier(char *nomf, GRAPHE *g)
   sommet=0; /* label du sommet en cours */
   nbS1=0; /* compte les sommets de la 1ere ligne */
   while (fgets(ligne,MAX,fp) != NULL)
-    { 
+    {
       nbLigne++; /* compte le nombre de lignes du fichier */
-			
+
       if (ligne[0] != '\n') /* on passe les lignes vides */
 				{
-					i=0; 
+					i=0;
 					if (nbS1 == 0) /* compte les sommets de la 1ere ligne */
 						{
-							nbS1=1; 
-							while (ligne[i] != '\n') 
+							nbS1=1;
+							while (ligne[i] != '\n')
 								{
 									if (ligne[i] == ',') nbS1++;
 									i++;
 								}
-							for (j=1; j<=nbS1; j++) 
+							for (j=1; j<=nbS1; j++)
 								{
 									ajouterSommet(g,0);
 								}
 							i=0; /* on relit la 1ere ligne */
 						}
-					
+
 					sommet++; /* origine des arcs */
 					nbElt=0; /* controle le nombre d'arcs crees */
 					while (ligne[i] != '\n')
@@ -370,7 +371,7 @@ int lireFichier(char *nomf, GRAPHE *g)
 							while (ligne[i] != ',' && ligne[i] != '\n')
 								{
 									while (ligne[i]==' ' || ligne[i]=='\t') {i++;}
-									if ((ligne[i]>'9' || ligne[i]<'0') && ligne[i]!='x') 
+									if ((ligne[i]>'9' || ligne[i]<'0') && ligne[i]!='x')
 										{
 											printf("Erreur à la ligne %d !\n",nbLigne);
 											supprimerGraphe(g);
@@ -378,13 +379,13 @@ int lireFichier(char *nomf, GRAPHE *g)
 										}
 									if (ligne[i]=='x') creerArc=0;
 									temp=10*temp+ligne[i]-'0';
-									i++; 
+									i++;
 									while (ligne[i]==' ' || ligne[i]=='\t') {i++;}
 								}
-							if (ligne[i] == ',') i++; 
+							if (ligne[i] == ',') i++;
 							nbElt++;
 							if (nbElt<=nbS1 && creerArc==1) ajouterArc(g,sommet,nbElt,temp); /* ligne pas trop longue */
-						} 
+						}
 					if (nbElt != nbS1) /* pas le bon nombre de champs sur ligne */
 						{
 							printf("Erreur à la ligne %d !\n",nbLigne);
@@ -397,3 +398,7 @@ int lireFichier(char *nomf, GRAPHE *g)
 	return 0;
 }
 
+int main() {
+	printf("Hello World!\n" );
+	return 0;
+}
