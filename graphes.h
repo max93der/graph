@@ -6,26 +6,26 @@
 
 struct eltadj {
 	int dest;
-	int info;            
+	int info;
 	struct eltadj *suivant;
 };
 
 struct sommet {
 	int label;
-	int info;    
-	struct sommet *suivant;      
-	struct eltadj *adj;  
+	int info;
+	struct sommet *suivant;
+	struct eltadj *adj;
 };
 
 struct graphe {
-	int nbS;          
-	int nbA;         
-	int maxS;        
+	int nbS;
+	int nbA;
+	int maxS;
 	struct sommet *premierSommet;
-	struct sommet *dernierSommet; 
+	struct sommet *dernierSommet;
 };
 
-typedef struct graphe GRAPHE; 
+typedef struct graphe GRAPHE;
 typedef struct sommet SOMMET;
 typedef struct eltadj ELTADJ;
 
@@ -47,3 +47,5 @@ int lireFichier(char *nomf, GRAPHE *);
 
 #endif
 
+
+//test
