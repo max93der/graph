@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "graphes.h"
 
+//check not important
+
 void initialiserGraphe(GRAPHE *g)
 {
 	g->nbS=0;
