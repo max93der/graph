@@ -1,3 +1,13 @@
+#Théorie des graphes: Projet 5
+
+
+
+#Maxime Deravet S202214
+#
+#Abdelilah Khaliphi S204896
+
+
+
 #Importation des modules nécessaires
 import networkx as nx
 import matplotlib.pyplot as plt
