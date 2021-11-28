@@ -82,6 +82,7 @@ def coloriage(G, couleur):
 
         if compteur == 0: #Si aucun sommet adjacent n'a de couleur, alors on attribue la couleur 1 au sommet correspondant à l'index i
             couleur[i] = 1
+            G.add_node(i + 1, couleur=1)
 
         else: #Sinon on doit vérifier quelle couleur on peut attribuer
             c = 1
@@ -89,6 +90,7 @@ def coloriage(G, couleur):
             while tourne:  #On attribue la plus petite couleur possible qui ne se trouve pas dans la liste couleur_voisin
                 if c not in couleur_voisin:
                     couleur[i] = c
+                    G.add_node(i+1, couleur = c)
                     tourne = False
                 c+=1
         i +=1
@@ -114,10 +116,9 @@ while a < len(matrice):
     a+=1
 ############
 
-
 couleur = coloriage(G, couleur)
-print(couleur)
+print("Les sommets sont coloriés dans l'ordre comme suit : " , couleur )
 
-#draw_graph(G)
-
+draw_graph(G)
+print(G.nodes.data())
 print("L'exécution complète a pris {} secondes".format(round(time.time() - temps_debut, 3)))
