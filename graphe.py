@@ -26,8 +26,8 @@ ligne =[]
 
 #@Prédoncition : matrice et ligne sont des listes vides déjà déclarées, un fichier data.gr, se trouvant dans le répertoire courrant, correctement formaté comme montré à la page 152 du syllabus du cours de théorie des graphes édition 2009-2010
 #@Postcondition: la liste matrice est remplie comme le fichier data.gr
-def lecture_fichier(matrice, ligne):
-    fichier = open("data.gr", "r")
+def lecture_fichier(matrice, ligne, file):
+    fichier = open(file, "r")
     caracteres = fichier.read()
 
     if len(caracteres) == 0: #Vérification que le fichier n'est pas vide
@@ -150,7 +150,7 @@ def coloriage(G, couleur):
 
 
 #Chargement de la matrice depuis le fichier
-matrice = lecture_fichier(matrice,ligne)
+matrice = lecture_fichier(matrice,ligne, "data.gr")
 ligne.clear() # On efface les résiduts de la liste ligne
 
 G = convert_networkX(matrice)#Création du graphe G avec NetworkX
