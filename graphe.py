@@ -13,7 +13,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import time
 
-temps_debut = time.time() #Sauvegarde du temps du début pour pouvoir calculer le temps total
+temps_debut = time.time() #Sauvegarde du temps du début pour calculer le temps total
 
 #Création des listes vides Matrice et Ligne
 matrice =[]
@@ -21,6 +21,8 @@ ligne =[]
 
 
 
+
+###### ////////// DECLARATION DES FONCTIONS \\\\\\\\\\ ######
 
 #@Prédoncition : matrice et ligne sont des listes vides déjà déclarées, un fichier data.gr, se trouvant dans le répertoire courrant, correctement formaté comme montré à la page 152 du syllabus du cours de théorie des graphes édition 2009-2010
 #@Postcondition: la liste matrice est remplie comme le fichier data.gr
@@ -43,6 +45,7 @@ def lecture_fichier(matrice, ligne):
 
     fichier.close()
     return matrice
+
 
 
 
@@ -87,7 +90,6 @@ def draw_graph(G):
 
 
 
-
 #@Préconditions: - G est un graphe correctement créé avec NetworkX
 #                - couleur est une liste vide déjà initialisée
 #
@@ -125,6 +127,7 @@ def coloriage(G, couleur):
 
     return couleur #voir @Postcondition pour plus de détail
 
+###### ////////// FIN FONCTIONS \\\\\\\\\\ ######
 
 
 
@@ -132,7 +135,6 @@ def coloriage(G, couleur):
 #Chargement de la matrice depuis le fichier
 matrice = lecture_fichier(matrice,ligne)
 ligne.clear() # On efface les résiduts de la liste ligne
-
 
 G = convert_networkX(matrice)#Création du graphe G avec NetworkX
 
@@ -145,7 +147,9 @@ while a < len(matrice):
     a+=1
 ############
 
+
 couleur = coloriage(G, couleur) #attribution des couleurs aux sommets
+
 print("Les sommets sont coloriés dans l'ordre comme suit : " , couleur )
 
 draw_graph(G) #Affichage graphique
