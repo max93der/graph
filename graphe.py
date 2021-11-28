@@ -1,33 +1,40 @@
+#Importation des modules nécessaires
 import networkx as nx
 import matplotlib.pyplot as plt
 import time
 
-temps_debut = time.time()
+temps_debut = time.time() #Sauvegarde du temps du début pour pouvoir calculer le temps total
 
 #Création des listes vides Matrice et Ligne
 matrice =[]
 ligne =[]
 
 
+
+
 #@Prédoncition : matrice et ligne sont des listes vides déjà déclarées, un fichier data.gr, se trouvant dans le répertoire courrant, correctement formaté comme montré à la page 152 du syllabus du cours de théorie des graphes édition 2009-2010
 #@Postcondition: la liste matrice est remplie comme le fichier data.gr
-
 def lecture_fichier(matrice, ligne):
     fichier = open("data.gr", "r")
     caracteres = fichier.read()
 
 
-    for caractere in caracteres:
+    for caractere in caracteres: #Parcours de tous les caractères du fichier
+
         if caractere == '\n': #Lorsqu'on arrive en fin de ligne, on ajoute la liste ligne à la matrice, et on vide la liste ligne pour qu'elle puisse en acceuillir une nouvelle
             matrice.append(ligne)
             ligne=[]
+
         if (caractere != ',') and (caractere != '\n') and (caractere != ' '): #rempli la liste ligne sans les caractéres de formatages ( , et \n ), et sans les éventuels espaces qui se seraient glissé
             ligne.append(caractere)
 
     if ligne != []:  #Ajout de la dernière ligne à la matrice si elle ne termine pas avec '\n'
         matrice.append(ligne)
 
+    fichier.close()
     return matrice
+
+
 
 #@Préconditions: matrice est un liste contenant une matrice représentant un graphe
 #@Postcondition: G est un graphe créé avec NetworkX
@@ -56,17 +63,25 @@ def convert_networkX(matrice):
 
     return G
 
+
+
+
 #@Préconditions : G est un graphe correctement créé avec NetworkX
 #@Postcondition: Affiche une représentation du graphe à l'écran
+#Source : NetworkX documentation : "Drawing Graphs"
 def draw_graph(G):
-    nx.draw(G)
+    nx.draw(G,with_labels=True, font_weight='bold')
     plt.show()
 
-#@Préconditions: G est un graphe correctement créé avec NetworkX
-#                couleur est une liste vide déjà initialisée
 
+
+
+
+
+#@Préconditions: - G est un graphe correctement créé avec NetworkX
+#                - couleur est une liste vide déjà initialisée
+#
 #@Postconditions: couleur contient une "couleur" (ici un nombre) à chaque index correspondant au sommet
-
 def coloriage(G, couleur):
     i = 0
     while i < len(matrice): #La boucle tourne tant que i est plus petit que la taille de la matrice
@@ -82,30 +97,34 @@ def coloriage(G, couleur):
 
         if compteur == 0: #Si aucun sommet adjacent n'a de couleur, alors on attribue la couleur 1 au sommet correspondant à l'index i
             couleur[i] = 1
-            G.add_node(i + 1, couleur=1)
+            G.add_node(i + 1, couleur=1)#Ajout de la couleur à NetworkX
 
         else: #Sinon on doit vérifier quelle couleur on peut attribuer
             c = 1
             tourne = True
+
             while tourne:  #On attribue la plus petite couleur possible qui ne se trouve pas dans la liste couleur_voisin
                 if c not in couleur_voisin:
                     couleur[i] = c
-                    G.add_node(i+1, couleur = c)
-                    tourne = False
+                    G.add_node(i+1, couleur = c)  #Ajout de la couleur à NetworkX
+                    tourne = False #Une fois qu'on a trouvé une couleur, on arrête la boucle
                 c+=1
+
         i +=1
 
 
-    return couleur #voir @Postcondition
+    return couleur #voir @Postcondition pour plus de détail
 
 
 
 
 
 #Chargement de la matrice depuis le fichier
-lecture_fichier(matrice,ligne)
-ligne.clear()
-G = convert_networkX(matrice)#Création de la matrice avec NetworkX
+matrice = lecture_fichier(matrice,ligne)
+ligne.clear() # On efface les résiduts de la liste ligne
+
+
+G = convert_networkX(matrice)#Création du graphe G avec NetworkX
 
 
 #Création de la liste couleur remplie de 0
@@ -116,9 +135,14 @@ while a < len(matrice):
     a+=1
 ############
 
-couleur = coloriage(G, couleur)
+couleur = coloriage(G, couleur) #attribution des couleurs aux sommets
 print("Les sommets sont coloriés dans l'ordre comme suit : " , couleur )
 
-draw_graph(G)
-print(G.nodes.data())
+draw_graph(G) #Affichage graphique
+
+#print(G.nodes.data())
+
 print("L'exécution complète a pris {} secondes".format(round(time.time() - temps_debut, 3)))
+
+
+#Fin programme
