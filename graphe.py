@@ -30,6 +30,8 @@ def lecture_fichier(matrice, ligne):
     fichier = open("data.gr", "r")
     caracteres = fichier.read()
 
+    if len(caracteres) == 0: #Vérification que le fichier n'est pas vide
+        return -1
 
     for caractere in caracteres: #Parcours de tous les caractères du fichier
 
@@ -44,7 +46,9 @@ def lecture_fichier(matrice, ligne):
         matrice.append(ligne)
 
     fichier.close()
+
     return matrice
+
 
 
 
