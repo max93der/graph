@@ -1,5 +1,8 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+import time
+
+temps_debut = time.time()
 
 #Création des listes vides Matrice et Ligne
 matrice =[]
@@ -61,7 +64,7 @@ lecture_fichier(matrice,ligne)
 ligne = []
 
 G = convert_networkX(matrice)
-print(G.edges())
-print(G)
 draw_graph(G)
 
+
+print("L'exécution complète a pris {} secondes".format(round(time.time() - temps_debut, 2)))
