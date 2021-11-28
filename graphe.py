@@ -13,7 +13,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import time
 
-temps_debut = time.time() #Sauvegarde du temps du début pour calculer le temps total
+temps_debut = time.time() #Sauvegarde du temps du début pour calculer le temps total à la fin
 
 #Création des listes vides Matrice et Ligne
 matrice =[]
@@ -46,6 +46,17 @@ def lecture_fichier(matrice, ligne):
         matrice.append(ligne)
 
     fichier.close()
+
+
+    ####Programmation défensive###
+    #Si jamais les dernières lignes sont vides, on les enlèves de la matrice
+    tourne =1
+    while tourne:
+        if len(matrice[-1]) == 0:
+            matrice.pop(-1)
+        else:
+            tourne =0
+
 
     return matrice
 
@@ -128,8 +139,10 @@ def coloriage(G, couleur):
 
         i +=1
 
+    # voir @Postcondition pour plus de détail
+    return couleur
 
-    return couleur #voir @Postcondition pour plus de détail
+
 
 ###### ////////// FIN FONCTIONS \\\\\\\\\\ ######
 
@@ -157,6 +170,8 @@ couleur = coloriage(G, couleur) #attribution des couleurs aux sommets
 print("Les sommets sont coloriés dans l'ordre comme suit : " , couleur )
 
 draw_graph(G) #Affichage graphique
+
+print(G)
 
 #print(G.nodes.data())
 
