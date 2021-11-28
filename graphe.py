@@ -24,8 +24,8 @@ ligne =[]
 
 ###### ////////// DECLARATION DES FONCTIONS \\\\\\\\\\ ######
 
-#@Prédoncition : matrice et ligne sont des listes vides déjà déclarées, un fichier data.gr, se trouvant dans le répertoire courrant, correctement formaté comme montré à la page 152 du syllabus du cours de théorie des graphes édition 2009-2010
-#@Postcondition: la liste matrice est remplie comme le fichier data.gr
+#@Prédoncition : matrice et ligne sont des listes vides déjà déclarées, un fichier "file", se trouvant dans le répertoire courant, correctement formaté comme montré à la page 152 du syllabus du cours de théorie des graphes édition 2009-2010
+#@Postcondition: la liste matrice est remplie comme le fichier "file"
 def lecture_fichier(matrice, ligne, file):
     fichier = open(file, "r")
     caracteres = fichier.read()
