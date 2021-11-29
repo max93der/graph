@@ -78,7 +78,7 @@
 \newcommand{\NomUN}{Deravet}
 \newcommand{\PrenomDEUX}{Abdelilah}
 \newcommand{\NomDEUX}{khaliphi}
-\renewcommand{\tablemat}{\tableofcontents}
+%\renewcommand{\tablemat}{\tableofcontents}
 
 %%%%%%%% ZONE PROTÉGÉE : MODIFIEZ UNE DES DIX PROCHAINES %%%%%%%%
 %%%%%%%%            LIGNES POUR PERDRE 2 PTS.            %%%%%%%%
@@ -88,8 +88,8 @@
 \begin{document}
 \maketitle
 \newpage
-\tablemat
-\newpage
+%\tablemat
+%\newpage
 %%%%%%%%%%%%%%%%%%%% FIN DE LA ZONE PROTÉGÉE %%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%% RAPPORT %%%%%%%%%%%%%%%
@@ -102,6 +102,7 @@ Pour des raisons de simplicité, nous avons choisi de réaliser ce projet en Pyt
 
 Nous avons donc dû développer les fonctions qui permettaient la lecture d'un fichier, de le transformer en graphe, et de pouvoir afficher le résultat à l'écran. Tout ça représente la "première partie".
 \\
+\\
 Ensuite, nous voilà au problème à proprement parler.
 Pour rappel, le projet 5 consiste à  colorier, avec un minimum de couleur, les sommets d'un graphe simple non orienté de manière à ce que aucuns sommets adjacents ne reçoivent la même couleur. Le graphe doit être fourni dans un fichier.
 \\
@@ -111,21 +112,28 @@ Une première idée était de fonctionner de "proche en proche", et de se balade
 Nous nous sommes vite rendu compte que cette méthode allait poser problème dans le cas d'un graphe non connexe.
 \\
 
-Notre deuxième approche était d'énumérer chaque sommet dans l'ordre, et de simplement lui attribuer une couleur la plus petite possible, différente de ses voisins.
+Notre deuxième approche était d'énumérer chaque sommet dans l'ordre, et de simplement leur attribuer une couleur la plus petite possible, différente de ses voisins.
 
 
-Cette méthode nous avait l'air un peu bancale au premier abord car elle ne résisterait peut-être pas à certains cas particuliers.
+Cette méthode nous avait l'air peu fiable au premier abord car elle ne résisterait peut-être pas à certains cas particuliers.
 Eh bien si ! A notre bonne surprise, elle fonctionnelle sur tous les graphes que nous avons testés. Plus de détails dans la partie "benchmarking".
 
 
 
 
 \section{Nos fonctions}
+\subsection{Configuration}
+\begin{itemize}
+    \item Python 3.8
+    \item NetworkX 2.6.3
+    \item mathplotlib 3.5.0
 
 
+\end{itemize}
 
+\subsection{Les fonctions en elles-mêmes}
 \begin{lstlisting}[caption={lecture du fichier}]
-#@Préconditions : matrice et ligne sont des listes vides déjà déclarées, un fichier "file", se trouvant dans le répertoire courant, correctement formaté comme montré à la page 152 du syllabus du cours de théorie des graphes édition 2009-2010
+#@Préconditions : matrice et ligne sont des listes vides déjà déclarées, un fichier "file", correctement formaté comme montré à la page 152 du syllabus du cours de théorie des graphes édition 2009-2010
 #@Postcondition: la liste matrice est remplie comme le fichier "file"
 def lecture_fichier(matrice, ligne, file):
 return matrice
@@ -137,15 +145,8 @@ return matrice
 def convert_networkX(matrice):
 return G
 \end{lstlisting}
+\newpage
 
-\begin{lstlisting}[caption={Afficher le graphique à l'écran}]
-#@Précondition : G est un graphe correctement créé avec NetworkX
-#@Postcondition: Affiche une représentation du graphe à l'écran
-#Source : NetworkX documentation, "Drawing Graphs"
-def draw_graph(G):
-    nx.draw(G,with_labels=True, font_weight='bold')
-    plt.show()
-\end{lstlisting}
 
 
 
@@ -157,7 +158,7 @@ def draw_graph(G):
 def coloriage(G, couleur):
 return couleur
 \end{lstlisting}
-Cette dernière fonction est celle qui nous intéresse en particulier.
+Cette fonction est celle qui nous intéresse en particulier.
 Comme dit dans la postcondition, ce ne sont pas des couleurs à proprement parler qui seront associées aux sommets, mais bien des nombres, afin de pouvoir en créer une infinité.
 
 Par exemple : \begin{itemize}
@@ -169,7 +170,14 @@ Alors la liste couleur se présentera comme ceci : [1,2,1]
 \\
 \\
 NB : le programme a l'air efficace, mais il ne l'est probablement pas à 100\%. Nous n'avons cependant pas encore rencontré de graphe qui produisait un résultat erroné
-
+\begin{lstlisting}[caption={Afficher le graphe à l'écran}]
+#@Préconditions : G est un graphe correctement créé avec NetworkX, couleur contient les couleurs associées à chaque sommet
+#@Postcondition: Affiche une représentation du graphe à l'écran
+#Source : NetworkX documentation : "Drawing Graphs"
+def draw_graph(G):
+    nx.draw(G,with_labels=True, node_color = couleur, font_weight='bold')
+    plt.show()
+\end{lstlisting}
 
 
 \section{Benchmarking}
@@ -177,21 +185,21 @@ NB : le programme a l'air efficace, mais il ne l'est probablement pas à 100\%. 
 Nous avons effectué 7 tests représentatifs avec divers types de graphes,
 voici leur résultat graphique ainsi que leur liste couleur associées à chacun:
 
-\includegraphics[scale = 1.5]{MATH0499/1.png}
-\includegraphics[scale = 1.5]{MATH0499/2.png}
+\includegraphics[scale = 1.25]{MATH0499/1.png}
+\includegraphics[scale = 1.25]{MATH0499/2.png}
 \\
 \\
-\includegraphics[scale = 1.5]{MATH0499/7.png}
-\includegraphics[scale = 1.5]{MATH0499/4.png}
+\includegraphics[scale = 1.25]{MATH0499/7.png}
+\includegraphics[scale = 1]{MATH0499/4.png}
 \\
 \\
-\includegraphics[scale = 1.5]{MATH0499/5.png}
-\includegraphics[scale = 1.5]{MATH0499/6.png}
+\includegraphics[scale = 1.25]{MATH0499/5.png}
+\includegraphics[scale = 1]{MATH0499/6.png}
 \\
 \\
-\includegraphics[scale = 1.5]{MATH0499/3.png}
+\includegraphics[scale = 1.25]{MATH0499/3.png}
 
-Tous ces résultats ont été obtenu en moyenne en 0.25 secondes, sur un ordinateur standard
+Tous ces résultats ont été obtenu en moyenne en 0.3 secondes, sur un ordinateur standard. Si on choisissait de ne pas afficher le graphe, alors le processus d'attribution des couleurs serait quasiment instantané.
 
 
 
