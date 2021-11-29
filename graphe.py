@@ -30,6 +30,8 @@ ligne =[]
 def lecture_fichier(matrice, ligne, file):
     fichier = open(file, "r")
     caracteres = fichier.read()
+    chiffre = 0 #plus de détails sur 'chiffre' plus bas
+
 
     if len(caracteres) == 0: #Vérification que le fichier n'est pas vide
         return -1
@@ -37,27 +39,29 @@ def lecture_fichier(matrice, ligne, file):
     for caractere in caracteres: #Parcours de tous les caractères du fichier
 
         if caractere == '\n': #Lorsqu'on arrive en fin de ligne, on ajoute la liste ligne à la matrice, et on vide la liste ligne pour qu'elle puisse en acceuillir une nouvelle
-            matrice.append(ligne)
+            if ligne != []:#Vérification que la ligne contient quelque chose
+                matrice.append(ligne)
             ligne=[]
+            chiffre = 0
 
         if (caractere != ',') and (caractere != '\n') and (caractere != ' '): #rempli la liste ligne sans les caractéres de formatages ( , et \n ), et sans les éventuels espaces qui se seraient glissé
-            ligne.append(caractere)
+            if chiffre == 0:
+                ligne.append(caractere)
+            chiffre +=1
+
+        if (caractere == ',') or (caractere=='\n'):
+            chiffre = 0
+
+    # Chiffre permet de n'ajouter qu'une seule fois un nombre qui serait composé de plusieurs chiffres.
+    # On incrémente chiffre à chaque fois qu'on ajoute quelque chose à la liste ligne,
+    # On réinitialise chiffre à 0 quand on rencontre une ',' ou un '\n'
+    # On vérifie que chiffre est égal à 0, donc qu'on a bien un nouveau nombre, avant de l'ajouter à la matrice
+
+
 
     if ligne != []:  #Ajout de la dernière ligne à la matrice si elle ne termine pas avec '\n'
         matrice.append(ligne)
-
     fichier.close()
-
-
-    ####Programmation défensive###
-    #Si jamais les dernières lignes sont vides, on les enlèves de la matrice
-    tourne =1
-    while tourne:
-        if len(matrice[-1]) == 0:
-            matrice.pop(-1)
-        else:
-            tourne =0
-
 
     return matrice
 
@@ -107,7 +111,7 @@ def draw_graph(G):
 
 
 #@Préconditions: - G est un graphe correctement créé avec NetworkX
-#                - couleur est une liste vide déjà initialisée
+#                - couleur est une liste remplie de 0, dont la taille est égale au nombre de sommets
 #
 #@Postconditions: couleur contient une "couleur" (ici un nombre) à chaque index correspondant au sommet
 def coloriage(G, couleur):
