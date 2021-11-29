@@ -12,6 +12,7 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import time
+import os, random
 
 temps_debut = time.time() #Sauvegarde du temps du début pour calculer le temps total à la fin
 
@@ -150,7 +151,11 @@ def coloriage(G, couleur):
 
 
 #Chargement de la matrice depuis le fichier
-matrice = lecture_fichier(matrice, ligne, "3.gr")
+dir = 'tests'
+filename = random.choice(os.listdir(dir))
+path = os.path.join(dir,filename)
+matrice = lecture_fichier(matrice, ligne, path)
+print("Le graphe affiché est le",filename )
 ligne.clear() # On efface les résiduts de la liste ligne
 
 G = convert_networkX(matrice)#Création du graphe G avec NetworkX
