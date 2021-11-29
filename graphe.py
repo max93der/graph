@@ -98,7 +98,7 @@ def convert_networkX(matrice):
 #@Postcondition: Affiche une représentation du graphe à l'écran
 #Source : NetworkX documentation : "Drawing Graphs"
 def draw_graph(G):
-    nx.draw(G,with_labels=True, font_weight='bold')
+    nx.draw(G,with_labels=True, node_color = couleur, font_weight='bold')
     plt.show()
 
 
@@ -150,7 +150,7 @@ def coloriage(G, couleur):
 
 
 #Chargement de la matrice depuis le fichier
-matrice = lecture_fichier(matrice,ligne, "data.gr")
+matrice = lecture_fichier(matrice, ligne, "3.gr")
 ligne.clear() # On efface les résiduts de la liste ligne
 
 G = convert_networkX(matrice)#Création du graphe G avec NetworkX
