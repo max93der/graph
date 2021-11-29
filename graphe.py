@@ -95,7 +95,7 @@ def convert_networkX(matrice):
 
 
 
-#@Préconditions : G est un graphe correctement créé avec NetworkX
+#@Préconditions : G est un graphe correctement créé avec NetworkX, couleur contient les couleurs associées à chaque sommet
 #@Postcondition: Affiche une représentation du graphe à l'écran
 #Source : NetworkX documentation : "Drawing Graphs"
 def draw_graph(G):
@@ -150,13 +150,19 @@ def coloriage(G, couleur):
 
 
 
-#Chargement de la matrice depuis le fichier
+#Permet de choisir un fichier random
 dir = 'tests'
 filename = random.choice(os.listdir(dir))
 path = os.path.join(dir,filename)
-matrice = lecture_fichier(matrice, ligne, path)
-print("Le graphe affiché est le",filename )
+print("Le graphe affiché est le",filename)
+####################################
+
+
+matrice = lecture_fichier(matrice, ligne, path) #Si on veut choisir un fichier personalisé, remplasser path par le nom ou le chemin du fichier
+                                                #Il faut aussi commenter la ligne supérieure qui print le numéro du graphe affiché
+
 ligne.clear() # On efface les résiduts de la liste ligne
+
 
 G = convert_networkX(matrice)#Création du graphe G avec NetworkX
 
@@ -167,7 +173,7 @@ a = 0
 while a < len(matrice):
     couleur.append(0)
     a+=1
-############
+##########################################
 
 
 couleur = coloriage(G, couleur) #attribution des couleurs aux sommets
@@ -176,11 +182,7 @@ print("Les sommets sont coloriés dans l'ordre comme suit : " , couleur )
 
 draw_graph(G) #Affichage graphique
 
-print(G)
 
-#print(G.nodes.data())
 
 print("L'exécution complète a pris {} secondes".format(round(time.time() - temps_debut, 3)))
-
-
 #Fin programme
