@@ -99,16 +99,6 @@ def convert_networkX(matrice):
 
 
 
-#@Préconditions : G est un graphe correctement créé avec NetworkX, couleur contient les couleurs associées à chaque sommet
-#@Postcondition: Affiche une représentation du graphe à l'écran
-#Source : NetworkX documentation : "Drawing Graphs"
-def draw_graph(G):
-    nx.draw(G,with_labels=True, node_color = couleur, font_weight='bold', font_color="whitesmoke")
-    plt.show()
-
-
-
-
 
 #@Préconditions: - G est un graphe correctement créé avec NetworkX
 #                - couleur est une liste remplie de 0, dont la taille est égale au nombre de sommets
@@ -148,6 +138,14 @@ def coloriage(G, couleur):
     return couleur
 
 
+
+
+#@Préconditions : G est un graphe correctement créé avec NetworkX, couleur contient les couleurs associées à chaque sommet
+#@Postcondition: Affiche une représentation du graphe à l'écran
+#Source : NetworkX documentation : "Drawing Graphs"
+def draw_graph(G):
+    nx.draw(G,with_labels=True, node_color = couleur, font_weight='bold', font_color="whitesmoke")
+    plt.show()
 
 ###### ////////// FIN FONCTIONS \\\\\\\\\\ ######
 
